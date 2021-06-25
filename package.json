@@ -18,6 +18,7 @@
     "dev": "nodemon --no-update-notifier ./index.js"
   },
   "dependencies": {
+    "@babel/polyfill": "^7.12.1",
     "body-parser": "^1.18.2",
     "compression": "^1.7.2",
     "cors": "^2.8.4",
