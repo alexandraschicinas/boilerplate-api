@@ -38,18 +38,31 @@ router.put('/word', (req, res) => {
     {
       $push: { words: word }
     },
-    { new: true }
-  )
-    .then(response => {
-      console.log(response, 'ha');
-      res.send(true);
-    })
-    .catch(error => {
-      const { message = 'Something went wrong.' } = error;
-      // logger.error(message);
-      console.log(message, 'hi');
-      res.status(400).send(message);
-    });
+    { new: true },
+    (err, result) => {
+      if (err) {
+        const { message = 'Something went wrong.' } = err;
+        res.status(400).send(message);
+        console.log(err);
+      } else {
+        res.send(result);
+        console.log('Deleted User : ', result);
+      }
+    }
+  );
 });
 
+router.delete('/delete', (req, res) => {
+  const { _id } = req.query;
+  Articles.findByIdAndDelete(_id, (err, result) => {
+    if (err) {
+      const { message = 'Something went wrong.' } = err;
+      res.status(400).send(message);
+      console.log(err);
+    } else {
+      res.send(result._id);
+      console.log('Deleted User : ', result);
+    }
+  });
+});
 export default router;
